@@ -1,0 +1,23 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: nginx-build
+  namespace: nginx-test
+  labels:
+    name: docker-build
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'my-nginx:latest'
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: DockerImage
+        name: registry.access.redhat.com/ubi8/nginx-118
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/fjcloud/nginx-container.git'
+    contextDir: examples
